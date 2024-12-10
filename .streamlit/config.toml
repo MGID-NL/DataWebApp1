@@ -1,0 +1,29 @@
+# .streamlit/config.toml
+
+[theme]
+# Hoofdkleur voor knoppen en belangrijke accenten - een diepe, futuristische blauwe tint
+primaryColor = "#3A8DFF"  # Diep blauw, geeft een technische, data-gedreven uitstraling
+
+# Achtergrondkleur van de app - een donker, high-tech zwart met een vleugje blauw gradient
+backgroundColor = "#121212"  # Diep zwart met een subtiele blauwe gloed voor een moderne uitstraling
+
+# Secundaire achtergrondkleur - donkergrijs met een subtiele blauwe tint
+secondaryBackgroundColor = "#1E1E1E"  # Donkergrijs voor containers en secundaire gebieden
+
+# Tekstkleur - Witachtig grijs, zorgt voor goed contrast en leest makkelijk
+textColor = "#E1E1E1"  # Lichte grijze kleur voor tekst op donkere achtergrond
+
+# Kleur voor knoppen - metallic groen/blauw voor een dynamische, high-tech uitstraling
+buttonColor = "#00B8D4"  # Helder turquoise voor knoppen en actie-elementen
+
+# Kleur voor tekstvelden, invulvelden of formuliervelden - in lijn met het technische thema
+inputTextColor = "#B3B3B3"  # Gedempt grijs voor tekstvelden, zodat het niet te fel is
+
+# Instellen van het lettertype - modern sans-serif
+font = "Roboto"
+
+# Accenten voor titels en secties - een metallic oranje tint voor duidelijkheid en contrast
+headerColor = "#FF6F00"  # Geavanceerde metallic oranje voor koppen en secties
+
+# Toevoegen van een gradient voor de bovenste header van de pagina
+headerBackground = "linear-gradient(90deg, rgba(29,29,29,1) 0%, rgba(58,141,255,1) 100%)"  # Blauwe gradient voor visueel effect

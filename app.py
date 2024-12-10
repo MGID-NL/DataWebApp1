@@ -1,13 +1,18 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import folium
+from st_aggrid import AgGrid
+from streamlit_folium import folium_static
+from streamlit_drawable_canvas import st_canvas
+from streamlit_echarts import st_echarts
 
 # Instellen van de pagina layout en de zijbalkmenu
 st.set_page_config(page_title="Mijn Bedrijf", page_icon=":house:", layout="wide")
 
 # Zijbalkmenu met radio buttons
 st.sidebar.header("Navigatie")
-menu_options = ["Home", "Inkoop", "Verkoop", "Logistiek"]
+menu_options = ["Home", "Inkoop", "Verkoop", "Logistiek", "Widgets"]
 choice = st.sidebar.radio("Kies een pagina", menu_options)
 
 # Voeg de jaar- en maandselectie toe aan de zijbalk
@@ -51,7 +56,7 @@ if choice == "Home":
         # Voeg een afbeelding toe in de tweede kolom (met use_container_width)
         st.image("https://via.placeholder.com/600x300", caption="Dit ben ik", use_container_width=True)
 
-# Inkoop pagina met tabs en verschillende selecties
+# Inkoop pagina met widgets
 elif choice == "Inkoop":
     st.title("Inkoop")
 
@@ -145,25 +150,7 @@ elif choice == "Verkoop":
             st.write(f"Bestelling geplaatst voor: {quantity} x {product_name} à {price} EUR")
             st.success("De bestelling is succesvol geplaatst!")
 
-    # Markdown en HTML voorbeelden
-    st.header("Markdown en HTML Voorbeelden")
-    st.markdown("""
-        ### Dit is een **Markdown** voorbeeld
-        Je kunt **vetgedrukte** tekst gebruiken, _cursieve_ tekst, en lijsten:
-        
-        - Item 1
-        - Item 2
-        - Item 3
-
-        Dit is een **[link](https://www.example.com)** naar een externe website.
-
-        ## HTML Voorbeeld
-        <div style="color: blue; font-size: 20px;">
-            Dit is een voorbeeld van **HTML** binnen Streamlit.
-        </div>
-    """, unsafe_allow_html=True)
-
-    # Logistiek pagina
+# Logistiek pagina
 elif choice == "Logistiek":
     st.title("Logistiek")
 
@@ -193,15 +180,77 @@ elif choice == "Logistiek":
 
     with col3:
         st.header("Retourlogistiek")
-        st.write("""Wij hebben een efficiënt retourproces ingericht waarmee klanten snel hun producten kunnen""")
+        st.write("""Wij hebben een efficiënt retourproces ingericht waarmee klanten snel hun producten kunnen retourneren.""")
 
-        # Tekstsectie voor Logistiek
-    st.write("""
-        In deze sectie gaan we in op de logistieke processen binnen Mijn Bedrijf. Logistiek speelt een cruciale rol in de 
-        efficiëntie van het bedrijf. Wij zorgen ervoor dat producten tijdig en op de juiste locatie aankomen, door een goed 
-        netwerk van leveranciers en transportdiensten te onderhouden.
-    """)
+# Widgets pagina
+elif choice == "Widgets":
+    st.title("Streamlit Widgets")
 
+    # Radio button voor het kiezen van een widget
+    widget_choice = st.radio("Kies een widget", ["AgGrid - Interactieve Tabel", "Folium - Interactieve Kaart", 
+                                                "Drawable Canvas - Teken op Canvas", "ECharts - Interactieve Grafiek", "ECharts - Interactieve Grafiek 2"])
+
+    if widget_choice == "AgGrid - Interactieve Tabel":
+        st.subheader("AgGrid - Interactieve Tabel")
+        data = pd.DataFrame({
+            "Col 1": [1, 2, 3, 4],
+            "Col 2": [10, 20, 30, 40],
+            "Col 3": ["A", "B", "C", "D"]
+        })
+        AgGrid(data)
+
+    elif widget_choice == "Folium - Interactieve Kaart":
+        st.subheader("Folium - Interactieve Kaart")
+        m = folium.Map(location=[52.379189, 4.900914], zoom_start=10)
+        folium.Marker([52.379189, 4.900914], popup="Amsterdam").add_to(m)
+        folium_static(m)
+
+    elif widget_choice == "Drawable Canvas - Teken op Canvas":
+        st.subheader("Drawable Canvas - Teken op Canvas")
+        canvas_result = st_canvas(
+            fill_color="white", stroke_width=2, stroke_color="black", background_color="white",
+            width=500, height=500, drawing_mode="freedraw"
+        )
+    
+    elif widget_choice == "ECharts - Interactieve Grafiek":
+     st.subheader("ECharts - Interactieve Grafiek")
+    
+    chart = {
+        "title": {"text": "ECharts Example"},
+        "xAxis": {"data": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]},
+        "yAxis": {},
+        "series": [{"name": "Sales", "type": "line", "data": [820, 932, 901, 934, 1290, 1330, 1320]}]
+    }
+    
+    # Toon de grafiek met st_echarts
+    st_echarts(options=chart, height="400px")
+
+elif widget_choice == "ECharts - Interactieve Grafiek 2":
+    st.subheader("ECharts - Interactieve Grafiek 2")
+    
+    chart = {
+        "xAxis": {
+            "type": "category",
+            "data": ["Jan", "Feb", "Mar", "Apr", "May", "Jun"]
+        },
+        "yAxis": {
+            "type": "value"
+        },
+        "series": [
+            {
+                "data": [820, 932, 901, 934, 1290, 1330],
+                "type": "line",
+                "smooth": True
+            }
+        ]
+    }
+
+    # Toon de grafiek met st_echarts
+    st_echarts(options=chart, height="400px")
+
+        
+    st_echarts(chart)
+    
 # Footer onderaan de pagina
 st.sidebar.markdown("---")
 st.sidebar.write("© 2024 MGID.Nl")
